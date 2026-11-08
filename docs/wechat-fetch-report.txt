@@ -1,0 +1,64 @@
+# wechat fetch watch
+start at 2026-11-04T17:05:15.803Z
+[wechat-fetch] file message: Zhang ç­‰ - 2025 - JailGuard A Universal Detection Framework for LLM Prompt-based Attacks.compare.pdf (2696611B, ver=null, key=c5d52a4a…, cdn=yes)
+[wechat-fetch] try https://file.wx2.qq.com/cgi-bin/mmwebwx-bin/webwxgetmedia?msgid=4437192247921731299&mediai -> {"ok":false,"error":"TypeError: Failed to fetch"}
+[wechat-fetch] try https://szfilehelper.weixin.qq.com/cgi-bin/mmwebwx-bin/webwxgetmedia?msgid=443719224792173 -> 0 bytes
+[wechat-fetch] all download attempts returned nothing
+[wechat] watcher started
+[wechat] client watching (1 total)
+[wechat] client watching (1 total)
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版 (3).pptx (62645821B)
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版 (2).pptx (62645821B)
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版 (1).pptx (62645821B)
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版.pptx (62645821B)
+[wechat-fetch] listening for file messages
+[wechat-fetch] loop: {"ok":true}
+[wechat] watcher started
+[wechat] client watching (1 total)
+[wechat-web] trusted click at 431,404 -> Zhang 等 - 2025 - JailGuard A Universal ...par.pdf
+[wechat] new file: Zhang+等+-+2025+-+JailGuard+A+Universal+Detection+Framework+for+LLM+Prompt-based+Attacks.compare.pdf (2696611B)
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版 (3).pptx (62645821B)
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版 (2).pptx (62645821B)
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版 (1).pptx (62645821B)
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版.pptx (62645821B)
+[wechat] watcher started
+[wechat] client watching (1 total)
+[wechat-fetch] listening for file messages
+[wechat-fetch] loop: {"ok":true}
+[wechat] new file: Zhang+等+-+2025+-+JailGuard+A+Universal+Detection+Framework+for+LLM+Prompt-based+Attacks.compare.pdf (2696611B)
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版 (3).pptx (62645821B)
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版 (2).pptx (62645821B)
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版 (1).pptx (62645821B)
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版.pptx (62645821B)
+[wechat] watcher started
+[wechat] client watching (1 total)
+[wechat-fetch] listening for file messages
+[wechat-fetch] loop: {"ok":true}
+[wechat] new file: Zhang+等+-+2025+-+JailGuard+A+Universal+Detection+Framework+for+LLM+Prompt-based+Attacks.compare.pdf (2696611B)
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版 (3).pptx (62645821B)
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版 (2).pptx (62645821B)
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版 (1).pptx (62645821B)
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版.pptx (62645821B)
+[wechat] client watching (1 total)
+[wechat-web] trusted click at 431,326 -> 中国国有企业改革_30分钟_35页_红色模板版.pptx
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版 (4).pptx (62645821B)
+[wechat-fetch] listening for file messages
+[wechat-fetch] loop: {"ok":true}
+[wechat] watcher started
+[wechat] client watching (1 total)
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版 (4).pptx (62645821B)
+[wechat] new file: Zhang+等+-+2025+-+JailGuard+A+Universal+Detection+Framework+for+LLM+Prompt-based+Attacks.compare.pdf (2696611B)
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版 (3).pptx (62645821B)
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版 (2).pptx (62645821B)
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版 (1).pptx (62645821B)
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版.pptx (62645821B)
+[wechat-web] trusted click at 580,326 -> 中国国有企业改革_30分钟_35页_红色模板版.pptx
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版 (5).pptx (62645821B)
+[wechat] client watching (1 total)
+[wechat-web] trusted click at 580,326 -> 中国国有企业改革_30分钟_35页_红色模板版.pptx
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版 (6).pptx (62645821B)
+[wechat] client watching (1 total)
+[wechat-web] trusted click at 580,326 -> 中国国有企业改革_30分钟_35页_红色模板版.pptx
+[wechat] new file: 中国国有企业改革_30分钟_35页_红色模板版 (7).pptx (62645821B)
+
+RESULT: timeout

@@ -1,0 +1,21 @@
+{
+  "host": "0.0.0.0",
+  "port": 8787,
+  "appServerHost": "127.0.0.1",
+  "appServerPort": 8791,
+  "autoStartCodex": true,
+  "codexExe": "",
+  "defaultCwd": "",
+  "passcode": "",
+  "secret": "",
+  "cookieDays": 30,
+  "fileScope": "home",
+  "clashApi": "http://127.0.0.1:9097",
+  "clashSecret": "",
+  "officePython": "",
+  "appRoots": {
+    "photoshop": ["C:\\Program Files\\Adobe", "C:\\Program Files (x86)\\Adobe"],
+    "qgis": ["C:\\Program Files", "C:\\OSGeo4W"]
+  },
+  "clawCliPath": ""
+}

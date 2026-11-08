@@ -1,0 +1,120 @@
+--codex-chat-code-font-size
+    :root=var(--codex-chat-code-font-size-override,var(--font-code-size,12px))
+--codex-chat-font-size
+    :root=var(--codex-chat-font-size-override,var(--font-ui-size,13px))
+--codex-corner-radius-scale
+    :root=1.25
+--codex-corner-shape
+    :root=superellipse(1.5)
+--codex-window-zoom
+    :root=1
+--color-dialog-overlay
+    [data-theme]=var(--color-surface-tertiary)
+    [data-theme]=color-mix(in oklab, var(--color-surface-tertiary) 80%, transparent)
+--composer-adjacent-max-width
+    :root=100%
+--composer-corner-shape
+    [data-theme]=superellipse(1.1)
+--composer-inline-overhang
+    :root=calc(var(--spacing) * 6)
+--composer-radius
+    [data-theme]=calc(var(--spacing) * 7)
+--composer-suggestion-inline-inset
+    :root=calc(var(--padding-toolbar) + var(--home-composer-inline-inset))
+--conversation-grouped-item-gap
+    :root=4px
+--conversation-item-gap
+    :root=16px
+--corner-radius-scale
+    :root=var(--codex-corner-radius-scale)
+--diffs-addition-color-override
+    :root=var(--color-codex-git-added)
+--diffs-deletion-color-override
+    :root=var(--color-codex-git-deleted)
+--diffs-font-family
+    :root=var(--font-mono)
+--diffs-font-size
+    :root=var(--font-code-size,12px)
+--diffs-gap-block
+    :root=0
+--diffs-line-height
+    :root=calc(var(--diffs-font-size,12px) * 1.8)
+--diffs-min-number-column-width
+    :root=4ch
+--elevation-composer
+    :root=0 0 0 1px #0000000a, 0 2px 8px 0 #0000000a, 0 4px 80px 8px #00000006
+    :root=0 0 0 1px #0000000a, 0 2px 8px 0 #0000000a, 0 4px 40px 8px #00000006
+--elevation-composer-dark
+    :root=inset 0 0 1px 0 #fff3
+--elevation-prominent
+    :root=var(--elevation-stroke), 0 3px 7.5px #0000000a, 0 0 20px #0000000d
+--elevation-sidebar
+    :root=var(--elevation-stroke), 0 3px 7.5px #00000008, 0 0 16px #00000005
+--elevation-stroke
+    :root=0 0 0 .5px var(--color-border-strong)
+--elevation-stroke-subtle
+    :root=0 0 0 .5px var(--lightningcss-light,rgb(from var(--color-border-strong) r g b / .04))var(--lightningcss-dark,rgb(from var(--color-border-strong) r g b / .06))
+--height-token-nav-row
+    :root=calc(var(--text-base) * 1.5 + var(--padding-row-y) * 2)
+--height-token-row
+    :root=var(--height-token-nav-row)
+--home-composer-inline-inset
+    :root=calc(var(--spacing) * 3.25)
+--inset-toolbar
+    :root=var(--height-toolbar)
+--lightningcss-dark
+    [data-theme=light]=
+    [data-theme=dark]=initial
+--lightningcss-light
+    [data-theme=light]=initial
+    [data-theme=dark]=
+--line-height-composer
+    :root=calc(var(--spacing) * 5)
+--max-app-overlay-z-index
+    :root=2147480000
+--max-height-suggestion-menu
+    :root=320px
+--min-height-composer
+    :root=calc(var(--spacing) * 11)
+--min-rows-composer-home
+    :root=1
+--opacity-composer-placeholder
+    :root=.5
+--padding-composer-empty-attachments
+    :root=calc(var(--spacing) * 2) calc(var(--spacing) * 2) calc(var(--spacing) * 1.5)
+--padding-composer-input
+    :root=0 calc(var(--spacing) * 3)
+--padding-composer-single-line-footer-block
+    :root=var(--spacing)
+--padding-panel
+    :root=var(--padding-panel-base)
+--padding-panel-base
+    :root=calc(var(--spacing) * 3)
+--padding-row-y
+    :root=calc(var(--spacing) * 1)
+--padding-toolbar
+    :root=calc(var(--spacing) * 4)
+--radius-2xl
+    :root=calc(var(--radius-2xl-base) * var(--corner-radius-scale))
+--radius-3xl
+    :root=calc(var(--radius-3xl-base) * var(--corner-radius-scale))
+--radius-4xl
+    :root=calc(var(--radius-4xl-base) * var(--corner-radius-scale))
+--radius-lg
+    :root=calc(var(--radius-lg-base) * var(--corner-radius-scale))
+--radius-md
+    :root=calc(var(--radius-md-base) * var(--corner-radius-scale))
+--radius-token-row
+    :root=9999px
+--radius-xl
+    :root=calc(var(--radius-xl-base) * var(--corner-radius-scale))
+--safe-area-left
+    :root=0px
+--safe-area-right
+    :root=0px
+--spacing-composer-footer-bottom
+    :root=calc(var(--spacing) * 2)
+--spacing-composer-input-footer
+    :root=var(--spacing)
+--spacing-composer-single-line-controls
+    :root=calc(var(--spacing) * 1.25)

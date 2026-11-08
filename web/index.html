@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<meta name="theme-color" content="#F6F6F6" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<title>Codex</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%230d0d0d'/%3E%3Ccircle cx='12' cy='12' r='5' fill='none' stroke='%23fff' stroke-width='1.6'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <!-- Static splash: painted by CSS before any JS runs, removed once boot() settles. -->
+  <div id="boot" role="status" aria-live="polite">
+    <div class="boot-mark" aria-hidden="true">◍</div>
+    <div class="boot-bar" aria-hidden="true"><i></i></div>
+  </div>
+
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4.5 10.2 12 4.2l7.5 6v8.1a1.7 1.7 0 0 1-1.7 1.7H6.2a1.7 1.7 0 0 1-1.7-1.7z"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M20 14.5a2.5 2.5 0 0 1-2.5 2.5H9l-4 3v-3H6.5A2.5 2.5 0 0 1 4 14.5v-8A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2"/><path d="M12 7.6V12l3 1.9"/></symbol>
+  <symbol id="i-library" viewBox="0 0 24 24"><path d="M5 4.5h3.4v15H5zM10.6 4.5h3.2v15h-3.2zM16 5.4l2.9-.8 3.1 14.2-2.9.8z"/></symbol>
+  <symbol id="i-at" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.6"/><path d="M15.6 8.4v4.9a2.6 2.6 0 0 0 5.2 0V12a8.8 8.8 0 1 0-3.5 7"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/></symbol>
+  <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M3 12h4l2.5-7 4 14L16 12h5"/></symbol>
+  <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="3.4" y="4.6" width="17.2" height="12" rx="2.2"/><path d="M9 20.4h6M12 16.6v3.8"/></symbol>
+  <symbol id="i-branch" viewBox="0 0 24 24"><circle cx="7" cy="5.5" r="2.2"/><circle cx="7" cy="18.5" r="2.2"/><circle cx="17" cy="9.5" r="2.2"/><path d="M7 7.7v8.6M17 11.7c0 3-2.4 4.4-5.2 4.9"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3.6" y="3.6" width="7" height="7" rx="2"/><rect x="13.4" y="3.6" width="7" height="7" rx="2"/><rect x="3.6" y="13.4" width="7" height="7" rx="2"/><rect x="13.4" y="13.4" width="7" height="7" rx="2"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 9.4a6 6 0 1 0-12 0c0 4.2-1.4 5.6-1.4 5.6h14.8S18 13.6 18 9.4"/><path d="M13.7 18.4a2 2 0 0 1-3.4 0"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.4"/><path d="m16 16 4 4"/></symbol>
+  <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M15.1 4.9a2.3 2.3 0 0 1 3.3 0l.7.7a2.3 2.3 0 0 1 0 3.3l-9 9-4.6 1.1 1.1-4.6z"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6.5 9.5 5.5 5.5 5.5-5.5"/></symbol>
+  <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9.5 6.5 5.5 5.5-5.5 5.5"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13.2 3 5.8 13.1h5.1L10.4 21l7.5-10.2h-5.2z"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.2 5 6v6c0 4.2 3 7.4 7 8.8 4-1.4 7-4.6 7-8.8V6z"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 24 24"><path d="M8 12V5.6a1.6 1.6 0 0 1 3.2 0V11m0-1.4a1.6 1.6 0 0 1 3.2 0V11m0-.8a1.6 1.6 0 0 1 3.2 0v4.2c0 3.4-2.4 6.4-6 6.4s-6-2.4-6-5.6V12"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3.5 21 20H3zM12 9.5v4.6M12 17.2v.1"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M12 4v10.2M12 14.2 8.2 10.4M12 14.2l3.8-3.8"/><path d="M5 16.4v2.1a1.5 1.5 0 0 0 1.5 1.5h11a1.5 1.5 0 0 0 1.5-1.5v-2.1"/></symbol>
+  <symbol id="i-wechat" viewBox="0 0 24 24"><path d="M9.2 4.4c3.6 0 6.5 2.3 6.5 5.2 0 .5-.1 1-.3 1.5"/><path d="M9.2 4.4C5.6 4.4 2.7 6.7 2.7 9.6c0 1.7 1 3.2 2.6 4.2l-.7 2.2 2.5-1.2c.7.2 1.4.3 2.1.3"/><path d="M14.6 9.9c3 0 5.4 1.9 5.4 4.3 0 1.4-.8 2.6-2.1 3.4l.5 1.9-2.1-1c-.5.1-1.1.2-1.7.2-3 0-5.4-1.9-5.4-4.3s2.4-4.5 5.4-4.5z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2"/><path d="M3.8 12h16.4M12 3.8c2.2 2.3 3.3 5.1 3.3 8.2s-1.1 5.9-3.3 8.2c-2.2-2.3-3.3-5.1-3.3-8.2S9.8 6.1 12 3.8z"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4.5V10h-5.4"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M12 19V5.4M12 5.4 6.2 11.2M12 5.4l5.8 5.8" /></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="2.2"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.4A8.6 8.6 0 0 1 9.6 4a8.4 8.4 0 1 0 10.4 10.4"/></symbol>
+  <symbol id="i-terminal" viewBox="0 0 24 24"><rect x="3.4" y="4.6" width="17.2" height="14.8" rx="2.6"/><path d="m7.6 9.6 2.8 2.4-2.8 2.4M13 14.4h3.6"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M6.5 3.8h7L18 8.3v11.9H6.5z"/><path d="M13.2 3.8v4.8h4.8"/></symbol>
+  <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3.6l1.9 5.1 5.1 1.9-5.1 1.9L12 17.6l-1.9-5.1L5 10.6l5.1-1.9z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.8 4.4 4.2L19 6.6"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3.8 7.4a2 2 0 0 1 2-2h3.4l2 2.2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5.8a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-attach" viewBox="0 0 24 24"><path d="M16.5 7.5 8.9 15a2.6 2.6 0 0 0 3.7 3.7l7.9-7.9a4.4 4.4 0 0 0-6.2-6.2l-8 8a6.2 6.2 0 0 0 8.8 8.8l5.3-5.3"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v10.5M12 14.5 8 10.5M12 14.5l4-4M5 18.5h14"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5.5 7h13M9.5 7V5.2h5V7M7 7l.8 12h8.4L17 7"/></symbol>
+  <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a3.6 3.6 0 0 1 4.8 4.8l-8.4 8.4-4.8-4.8z"/><path d="m6.3 14.7-2 2 2.8 2.8 2-2"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5.5v13M5.5 12h13"/></symbol>
+</svg>
+
+<!-- ------------------------------------------------------------ login -->
+<section id="login" class="login" hidden>
+  <form class="login-card" id="loginForm" autocomplete="on">
+    <div class="login-mark" aria-hidden="true">◍</div>
+    <h1>Codex Remote</h1>
+    <p class="login-sub">连接这台电脑上的 Codex 会话</p>
+    <label class="field">
+      <span>访问密码</span>
+      <input id="passcode" type="password" name="passcode" inputmode="text"
+             autocomplete="current-password" placeholder="config.json 里的 passcode" required />
+    </label>
+    <button class="btn-primary" type="submit" id="loginBtn">连接</button>
+    <p class="login-error" id="loginError" role="alert"></p>
+  </form>
+</section>
+
+<!-- ------------------------------------------------------------ app -->
+<div id="app" class="app" hidden>
+  <nav class="rail" aria-label="主导航">
+    <button class="rail-btn is-active" data-rail="home" aria-label="首页"><svg><use href="#i-home"/></svg></button>
+    <button class="rail-btn" data-rail="tools" aria-label="技能与 MCP"><svg><use href="#i-wrench"/></svg></button>
+    <button class="rail-btn" data-rail="files" aria-label="最近文件"><svg><use href="#i-folder"/></svg></button>
+    <button class="rail-btn" data-rail="usage" aria-label="用量"><svg><use href="#i-library"/></svg></button>
+    <button class="rail-btn" data-rail="tasks" aria-label="任务监测"><svg><use href="#i-pulse"/></svg></button>
+    <button class="rail-btn" data-rail="net" aria-label="网络"><svg><use href="#i-globe"/></svg></button>
+    <div class="rail-gap"></div>
+    <button class="rail-btn" id="themeBtn" aria-label="切换主题"><svg><use href="#i-moon"/></svg></button>
+  </nav>
+
+  <aside class="sidebar" id="sidebar" aria-label="会话列表">
+    <header class="sidebar-head">
+      <div class="sidebar-tools">
+        <button class="icon-btn" id="bellBtn" aria-label="通知"><svg><use href="#i-bell"/></svg></button>
+        <button class="icon-btn" id="selectBtn" aria-label="批量选择会话" aria-pressed="false"><svg><use href="#i-check"/></svg></button>
+        <button class="icon-btn" id="searchBtn" aria-label="搜索"><svg><use href="#i-search"/></svg></button>
+      </div>
+    </header>
+
+    <button class="new-chat" id="newChatBtn">
+      <svg><use href="#i-pencil"/></svg>
+      <span>New chat</span>
+    </button>
+
+    <div class="sidebar-search" id="searchBox" hidden>
+      <input id="searchInput" type="search" placeholder="搜索会话…" />
+    </div>
+
+    <div class="sidebar-scroll" id="sidebarScroll">
+      <div id="sections" class="sections"></div>
+    </div>
+
+    <div class="bulk-bar" id="bulkBar" hidden>
+      <div class="bulk-count"><span id="bulkCount">0</span> 项已选</div>
+      <div class="bulk-actions">
+        <button type="button" class="btn btn-sm" id="bulkAll">全选</button>
+        <button type="button" class="btn btn-sm" id="bulkArchive">归档</button>
+        <button type="button" class="btn btn-sm" id="bulkMove">移到项目</button>
+        <button type="button" class="btn btn-sm btn-danger" id="bulkDelete">删除</button>
+        <button type="button" class="btn btn-sm" id="bulkCancel">取消</button>
+      </div>
+    </div>
+
+    <footer class="sidebar-foot">
+      <span class="conn-dot" id="connDot"></span>
+      <span id="connText" role="status" aria-live="polite">连接中…</span>
+    </footer>
+  </aside>
+
+  <main class="main" id="main">
+    <header class="main-head">
+      <button class="icon-btn drawer-only" id="drawerBtn" aria-label="会话列表"><svg><use href="#i-menu"/></svg></button>
+      <h1 class="thread-title" id="threadTitle">New chat</h1>
+      <div class="main-tools">
+        <div class="metrics" id="metrics"></div>
+        <span class="cwd-chip" id="cwdChip" title="工作目录"></span>
+        <button class="icon-btn" id="newThreadBtn" aria-label="新会话"><svg><use href="#i-plus"/></svg></button>
+      </div>
+    </header>
+
+    <div class="banner" id="banner" hidden></div>
+
+    <div class="scroll" id="scroll">
+      <div class="stream" id="messages"></div>
+    </div>
+
+    <div class="composer-wrap">
+      <div class="wx-tip" id="wxTip" role="status" aria-live="polite" hidden>
+        <span>微信内置浏览器选不到聊天文件，请点右上角 <strong>⋯ → 在浏览器打开</strong> 再上传。</span>
+        <button type="button" class="btn" id="wxTipClose">知道了</button>
+      </div>
+      <div class="quota-banner" id="quotaBanner" role="status" aria-live="polite" hidden></div>
+      <div class="composer-project" id="composerProject">
+        <button type="button" class="proj-pick" id="projectBtn" aria-haspopup="menu" aria-label="选择项目">
+          <svg class="chip-ico" aria-hidden="true"><use href="#i-folder"/></svg><span id="projectLabel">选择项目</span><svg class="chip-chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+        </button>
+        <div class="mode-switch" id="modeSwitch" role="radiogroup" aria-label="对话模式">
+          <button type="button" class="ms-seg" data-mode="default" role="radio" aria-checked="true">普通</button>
+          <button type="button" class="ms-seg" data-mode="plan" role="radio" aria-checked="false">计划</button>
+          <button type="button" class="ms-seg" data-mode="target" role="radio" aria-checked="false">目标</button>
+        </div>
+        <button type="button" class="keep-toggle" id="keepBtn" aria-pressed="false" disabled
+                title="保持：断联、异常结束或额度恢复后自动继续">
+          <svg aria-hidden="true"><use href="#i-pulse"/></svg><span>保持</span>
+        </button>
+      </div>
+      <div class="composer" id="composer">
+        <div class="attachments" id="attachments" hidden></div>
+        <textarea id="input" rows="1" placeholder="描述你的任务，Enter 发送，Shift+Enter 换行；输入 / 调用技能；可拖入文件"></textarea>
+        <div class="composer-line">
+          <div class="composer-row">
+            <button class="chip chip-merged" id="effortBtn" aria-haspopup="listbox" aria-label="模型与思考强度" title="模型与思考强度"><span id="modelLabel">模型</span><span class="chip-sep">·</span><span id="effortLabel">思考</span><svg class="chip-chev"><use href="#i-chevron-down"/></svg></button>
+            <button class="chip" id="accessBtn" aria-haspopup="listbox"><svg class="chip-ico"><use href="#i-shield"/></svg><span id="accessLabel">请求批准</span><svg class="chip-chev"><use href="#i-chevron-down"/></svg></button>
+          </div>
+          <button class="icon-btn attach-btn" id="attachBtn" aria-label="添加文件"><svg><use href="#i-attach"/></svg></button>
+          <div class="composer-actions">
+            <button class="icon-btn stop-btn" id="stopBtn" aria-label="停止" hidden><svg><use href="#i-stop"/></svg></button>
+            <button class="send-btn" id="sendBtn" aria-label="发送" disabled><svg><use href="#i-send"/></svg></button>
+          </div>
+        </div>
+      </div>
+      <div class="mode-pop" id="modePop" role="dialog" aria-label="思考强度" hidden>
+        <div class="mode-head">
+          <button type="button" class="mode-bolt-btn" id="modeBolt" aria-pressed="false"
+                  aria-label="Fast 加速档" title="Fast 加速档：约 2 倍速度，消耗更多额度" hidden>
+            <svg aria-hidden="true"><use href="#i-bolt"/></svg>
+          </button>
+          <span class="mode-title" id="modeTitle">中</span>
+          <span class="mode-fast-tag" id="modeFastTag" hidden>Fast</span>
+          <button type="button" class="mode-reset" id="modeReset" aria-label="恢复默认强度" title="恢复默认">
+            <svg aria-hidden="true"><use href="#i-refresh"/></svg>
+          </button>
+        </div>
+        <button type="button" class="mode-model" id="modeModel">
+          <span id="modeModelName">模型</span>
+          <svg class="mode-chev" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+        </button>
+        <div class="mode-slider">
+          <div class="mode-dots" id="modeDots" aria-hidden="true"></div>
+          <input type="range" class="mode-range" id="modeRange" min="0" max="4" step="1" value="2"
+                 aria-label="思考强度" />
+        </div>
+        <div class="mode-scale" id="modeScale" aria-hidden="true"></div>
+      </div>
+      <div class="access-pop" id="accessPop" role="listbox" aria-label="审批方式" hidden>
+        <div class="access-head">
+          <span>应如何批准 ChatGPT 操作？</span>
+        </div>
+        <button type="button" class="access-opt" data-access="ask" role="option">
+          <svg class="access-ico" aria-hidden="true"><use href="#i-hand"/></svg>
+          <span class="access-text"><b>请求批准</b><i>编辑外部文件和使用互联网时始终询问</i></span>
+          <svg class="access-check" aria-hidden="true"><use href="#i-check"/></svg>
+        </button>
+        <button type="button" class="access-opt" data-access="auto" role="option">
+          <svg class="access-ico" aria-hidden="true"><use href="#i-sparkle"/></svg>
+          <span class="access-text"><b>帮我批准</b><i>仅对检测到的风险操作请求批准</i></span>
+          <svg class="access-check" aria-hidden="true"><use href="#i-check"/></svg>
+        </button>
+        <button type="button" class="access-opt danger" data-access="full" role="option">
+          <svg class="access-ico" aria-hidden="true"><use href="#i-warn"/></svg>
+          <span class="access-text"><b>完全访问权限</b><i>可不受限制地访问互联网和你电脑上的任何文件</i></span>
+          <svg class="access-check" aria-hidden="true"><use href="#i-check"/></svg>
+        </button>
+      </div>
+      <p class="hint" id="hint">任务在这台电脑上执行，关掉页面也会继续</p>
+    </div>
+  </main>
+</div>
+
+<div class="drawer-overlay" id="overlay" hidden></div>
+<div class="menu" id="menu" hidden></div>
+  <!-- Usage ball: outer ring = 5h window, inner ring = weekly, centre = 5h reset countdown. -->
+  <button id="quotaBall" class="quota-ball" type="button" aria-label="用量" hidden>
+    <svg viewBox="0 0 56 56" aria-hidden="true" focusable="false">
+      <circle class="qb-track" cx="28" cy="28" r="24"></circle>
+      <circle class="qb-arc qb-arc-outer" cx="28" cy="28" r="24"></circle>
+      <circle class="qb-track qb-track-inner" cx="28" cy="28" r="16"></circle>
+      <circle class="qb-arc qb-arc-inner" cx="28" cy="28" r="16"></circle>
+    </svg>
+    <span class="qb-center"><span class="qb-time" id="qbTime">--:--</span></span>
+  </button>
+
+  <!-- Stacked notifications (#20) and the command palette (#09). -->
+  <div id="toasts" class="toasts" role="status" aria-live="polite"></div>
+  <div id="cmdk" class="cmdk" hidden>
+    <div class="cmdk-box" role="dialog" aria-modal="true" aria-label="命令面板">
+      <input id="cmdkInput" class="cmdk-input" type="text" placeholder="搜索会话、项目、面板，或输入动作…" autocomplete="off" spellcheck="false" />
+      <div id="cmdkList" class="cmdk-list"></div>
+      <div class="cmdk-foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span><span><kbd>Ctrl</kbd>+<kbd>K</kbd> 呼出</span></div>
+    </div>
+  </div>
+
+<!-- drag & drop target -->
+<div class="drop-overlay" id="dropOverlay" hidden>
+  <div class="drop-inner">
+    <svg><use href="#i-attach"/></svg>
+    <strong>松开即添加到本机</strong>
+    <span>文件会落到这台电脑的临时目录，并随下一条消息一起发出</span>
+  </div>
+</div>
+
+<!-- skill slash menu -->
+<div class="slash" id="slashMenu" hidden></div>
+
+<!-- side panel: skills+MCP / recent files / usage -->
+<aside class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="panelTitle" hidden>
+  <header class="panel-head">
+    <span id="panelTitle">面板</span>
+    <button class="icon-btn" id="panelClose" aria-label="关闭"><svg><use href="#i-close"/></svg></button>
+  </header>
+  <div class="panel-tabs" id="panelTabs" hidden></div>
+  <div class="panel-body" id="panelBody"></div>
+</aside>
+
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

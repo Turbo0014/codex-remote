@@ -1,0 +1,34 @@
+# what never belongs in git
+bridge/config.json
+bridge/logs/
+bridge/*.log
+bridge/claw-labels.json
+bridge/claw-threads.json
+bridge/wechat-greeted.json
+bridge/autoswitch.json
+bridge/startup.out
+bridge/startup.err
+node_modules/
+**/node_modules/
+*.log
+
+# vendored copies of other apps' web assets (large, not ours to redistribute)
+desktop-webview/
+_dshmain/
+protocol/
+protocol-exp/
+
+# research material pulled from other projects
+docs/_research/
+
+docs/*.txt
+docs/*.log
+
+# screenshots taken during development (personal account ids inside)
+docs/*.png
+docs/*.jpg
+docs/*.jpeg
+
+*.tmp
+.DS_Store
+Thumbs.db
