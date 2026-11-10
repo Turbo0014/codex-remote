@@ -3058,6 +3058,49 @@ async function clawStatus(force = false) {
 function clawNotifyEnabled() { return localStorage.getItem(CLAW_NOTIFY_KEY) !== "0"; }
 
 /** Send text (and optionally a file) through the ClawBot channel. */
+const CLAW_TARGET_KEY = "codex-remote-claw-target";
+
+/**
+ * Which WeChat should receive this file?
+ * One account: no question. Several: ask once, remember the answer.
+ * @returns {Promise<string|null>} accountId, or null when there is nothing bound
+ */
+async function pickClawTarget() {
+  let accounts = [];
+  try {
+    const r = await fetch("/api/claw/accounts", { credentials: "same-origin" }).then((x) => x.json());
+    accounts = r?.accounts ?? [];
+  } catch { return null; }
+  if (!accounts.length) return null;
+  if (accounts.length === 1) return accounts[0].accountId;
+
+  // Several accounts: always ask. Remembering the last pick only decides the order and
+  // the ✓, because "send it to the other one this time" has to stay one tap away.
+  const remembered = localStorage.getItem(CLAW_TARGET_KEY);
+  const sorted = [...accounts].sort((a, b) => (b.accountId === remembered) - (a.accountId === remembered));
+
+  return await new Promise((resolve) => {
+    let settled = false;
+    const done = (id) => {
+      if (settled) return;
+      settled = true;
+      if (id) localStorage.setItem(CLAW_TARGET_KEY, id);
+      resolve(id);
+    };
+    const items = sorted.map((a) => ({
+      label: (a.accountId === remembered ? "✓ " : "") + a.displayName + (a.channel === "running" ? "" : "（未连接）"),
+      onSelect: () => done(a.accountId),
+    }));
+    const r = dom.attachBtn.getBoundingClientRect();
+    openMenuAt(r.left, r.top - 8 - items.length * 34, items, "发到哪个微信");
+    // Clicking elsewhere closes the menu without a choice; don't hang the send forever.
+    setTimeout(() => done(null), 20000);
+  });
+}
+
+/** Ask again next time (the panel offers this when someone wants to switch). */
+function forgetClawTarget() { localStorage.removeItem(CLAW_TARGET_KEY); }
+
 async function clawSend(payload, onTick) {
   const start = await fetch("/api/claw/send", {
     method: "POST",
@@ -4985,31 +5028,35 @@ async function openFilePanel(target, name) {
   const wxBtn = document.createElement('button');
   wxBtn.type = 'button';
   wxBtn.className = 'icon-btn dock-wx';
-  wxBtn.title = '发送到微信';
+  wxBtn.title = "发送到微信" + (localStorage.getItem(CLAW_TARGET_KEY) ? "" : "");
   wxBtn.setAttribute('aria-label', '发送到微信');
   wxBtn.innerHTML = '<svg aria-hidden="true"><use href="#i-wechat"/></svg>';
   const LARGE_FILE = 5 * 1024 * 1024;
 
   const sendAsFile = async () => {
+    // Which WeChat first: asking after the transfer row appears leaves a ghost entry
+    // behind when the user backs out of the menu.
+    const st0 = await clawStatus();
+    if (!st0?.loggedIn) {
+      toast("还没有绑定 ClawBot：网络面板 → ClawBot → 扫码绑定", 5000);
+      closePanel();
+      document.querySelector('[data-rail="net"]')?.click();
+      return;
+    }
+    const accountId = await pickClawTarget();
+    if (!accountId) return;
+
     wxBtn.disabled = true;
     wxBtn.classList.add("is-busy");
     const tid = addTransfer({ kind: "wechat", name: label, path: target, size: 0 });
     toast("正在发到微信…", 3000);
     try {
-      // ClawBot is the only channel now.
-      const st = await clawStatus();
-      if (!st?.loggedIn) {
-        endTransfer(tid, { ok: false, error: "还没有绑定 ClawBot" });
-        toast("还没有绑定 ClawBot：网络面板 → ClawBot → 扫码绑定", 5000);
-        closePanel();
-        document.querySelector('[data-rail="net"]')?.click();
-        return;
-      }
-      const r = await clawSend({ file: target, text: label }, (job) => {
+      const r = await clawSend({ file: target, text: label, accountId }, (job) => {
         if (job?.state === "done") patchTransfer(tid, { loaded: 1, total: 1 });
       });
       endTransfer(tid, { ok: Boolean(r.ok), error: r.error });
-      if (r.ok) toast("已通过 ClawBot 发到微信：" + label, 4000);
+      if (r.ok) toast("已发到微信：" + label, 4000);
+      else if (r.queued) toast(r.error, 5000);
       else toast("发送失败：" + (r.error || "未知错误"), 5000, { action: { label: "重试", onSelect: () => sendAsFile() } });
     } catch (e) {
       const msg = e && /Load failed|Failed to fetch|NetworkError/i.test(e.message) ? "网络中断或请求超时" : e.message;
@@ -5028,7 +5075,8 @@ async function openFilePanel(target, name) {
     const lid = addTransfer({ kind: "wechat", name: label + "（链接）", path: target, size: 0 });
     toast("正在发送下载链接…", 3000);
     try {
-      const r = await clawSend({ text: label + "\n" + url });
+      const accountId = await pickClawTarget();
+      const r = await clawSend({ text: label + "\n" + url, accountId });
       endTransfer(lid, { ok: Boolean(r.ok), error: r.error });
       if (r.ok) toast("已把下载链接发到微信：" + url, 6000);
       else toast("发链接失败：" + (r.error || "未知错误"));

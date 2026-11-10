@@ -684,6 +684,10 @@ const server = http.createServer(async (req, res) => {
       const body = JSON.parse(raw || "{}");
       const text = String(body.text || '').slice(0, 2000);
       const file = body.file ? String(body.file) : null;
+      // Explicit pick wins; otherwise the account chosen in the panel, otherwise the
+      // most recently active one.
+      const target = String(body.accountId || "").trim();
+      const accountId = target || cfg.clawAccount || null;
       if (!text && !file) throw new Error("text or file required");
       if (file) {
         try { if (!fs.statSync(file).isFile()) throw new Error("not a file"); }
@@ -693,8 +697,14 @@ const server = http.createServer(async (req, res) => {
       clawJobs.set(job.id, job);
       jobId = job.id;
       // Detached: an upload can take a while and the client polls the job.
-      sendWechat({ text, file, accountId: cfg.clawAccount || null })
-        .then((r) => { job.state = r.ok ? 'done' : 'error'; job.message = r.message; job.code = r.code; job.endedAt = Date.now(); })
+      sendWechat({ text, file, accountId })
+        .then((r) => {
+          job.state = r.ok ? 'done' : 'error';
+          job.message = r.message ?? r.error;
+          job.code = r.code;
+          job.accountId = accountId;
+          job.endedAt = Date.now();
+        })
         .catch((e) => { job.state = 'error'; job.message = e.message; job.endedAt = Date.now(); });
       out = { ok: true, jobId: job.id };
     } catch (e) {
